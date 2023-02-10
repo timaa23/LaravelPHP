@@ -26,6 +26,15 @@ const DefaultHeader = () => {
                   Головна
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link
+                  className="nav-link"
+                  aria-current="page"
+                  to="/add-product"
+                >
+                  Додати продукт
+                </Link>
+              </li>
             </ul>
             <ul className="navbar-nav">
               <li className="nav-item">

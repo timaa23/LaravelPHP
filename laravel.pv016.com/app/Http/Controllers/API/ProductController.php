@@ -13,28 +13,37 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
-        return response()->json($products,  200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+        $input = $request->all();
+        $name = $input["name"] ?? "";
+        $products = Product::where("name", "LIKE", "%$name%")->paginate(2);
+        return response()->json($products, 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
             JSON_UNESCAPED_UNICODE);
+
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+        $product=Product::create($input);
+        return response()->json([
+            "success" => true,
+            "message" => "Product created",
+            "data" => $product
+        ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -45,8 +54,8 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -57,11 +66,22 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+        if (is_null($product)) {
+            return $this->sendError('Product not found.');
+        }
+        $product->delete();
+        return response()->json([
+            "success" => true,
+            "message" => "Product deleted successfully.",
+            "data" => $product
+        ], 200,
+            ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+            JSON_UNESCAPED_UNICODE);
     }
 }
