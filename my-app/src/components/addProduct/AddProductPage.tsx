@@ -9,15 +9,15 @@ const AddProductPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const inputRef1 = useRef<HTMLInputElement>(null);
-  const inputRef2 = useRef<HTMLInputElement>(null);
+  const inputRefName = useRef<HTMLInputElement>(null);
+  const inputRefDetail = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const product = {
-      name: inputRef1.current?.value,
-      detail: inputRef2.current?.value,
+      name: inputRefName.current?.value,
+      detail: inputRefDetail.current?.value,
     };
 
     http.post("/api/products/create", product).then((res) => {
@@ -48,7 +48,7 @@ const AddProductPage = () => {
               className="form-control"
               id="name"
               name="name"
-              ref={inputRef1}
+              ref={inputRefName}
             />
           </label>
         </div>
@@ -60,7 +60,7 @@ const AddProductPage = () => {
               className="form-control"
               id="description"
               name="description"
-              ref={inputRef2}
+              ref={inputRefDetail}
             />
           </label>
         </div>
