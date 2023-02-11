@@ -11,7 +11,9 @@ const HomePage = () => {
   const { list, count_pages, current_page, total } = useTypedSelector(
     (store) => store.product
   );
+
   const { GetProductList, DeleteProduct } = useActions();
+  //Читаємо параметри з url
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState<IProductSearch>({
     name: searchParams.get("name") || "",
@@ -47,20 +49,24 @@ const HomePage = () => {
     </tr>
   ));
 
+  //Створюємо масив кнопок за кількістю сторінок
   const buttons = [];
   for (let i = 1; i <= count_pages; i++) {
     buttons.push(i);
   }
 
+  //Перебирає не пусті об'єкти
   function filterNonNull(obj: IProductSearch) {
     return Object.fromEntries(Object.entries(obj).filter(([k, v]) => v));
   }
 
+  //Метод для пагінації сторінок
   const pagination = buttons.map((page) => (
     <li key={page} className="page-item">
       <Link
         className={classNames("page-link", { active: current_page === page })}
         onClick={() => setSearch({ ...search, page })}
+        //Створюємо і переходимо на посилання для обраної сторінки
         to={"?" + qs.stringify(filterNonNull({ ...search, page }))}
       >
         {page}
@@ -119,6 +125,7 @@ const HomePage = () => {
           <tbody>{data}</tbody>
         </table>
         <nav>
+          {/* Кнопки */}
           <ul className="pagination">{pagination}</ul>
         </nav>
       </div>

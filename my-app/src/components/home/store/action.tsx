@@ -8,10 +8,13 @@ import {
   ProductActionTypes,
 } from "./types";
 
+//Action для отримання списку продуктів
 export const GetProductList =
   (search: IProductSearch) => async (dispatch: Dispatch<ProductActions>) => {
     try {
+      //Отримуємо список з api
       const resp = await http.get<IProductResponse>("/api/products", {
+        //Передаємо параметри пошуку на api
         params: search,
       });
       console.log("Response data: ", resp);
@@ -28,6 +31,7 @@ export const GetProductList =
     } catch (err: any) {}
   };
 
+//Action для видалення продукту за id
 export const DeleteProduct =
   (product_id: number) => async (dispath: Dispatch<ProductActions>) => {
     try {
