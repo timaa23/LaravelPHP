@@ -21,6 +21,7 @@ export interface IProductState {
 export interface IProductSearch {
   name?: string;
   page?: number | string | null;
+  count?: number | string | null;
 }
 
 export enum ProductActionTypes {

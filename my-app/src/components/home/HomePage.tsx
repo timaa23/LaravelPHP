@@ -18,6 +18,7 @@ const HomePage = () => {
   const [search, setSearch] = useState<IProductSearch>({
     name: searchParams.get("name") || "",
     page: searchParams.get("page") || 1,
+    count: searchParams.get("count") || 10,
   });
 
   useEffect(() => {
@@ -93,22 +94,50 @@ const HomePage = () => {
       <div className="w-75" style={{ margin: "0 auto" }}>
         <h1 className="text-center mt-4 mb-3">Головна сторінка</h1>
 
-        <form onSubmit={handleSubmit}>
-          <div className="mb-2">
-            <label htmlFor="name">Назва</label>
+        <form
+          onSubmit={handleSubmit}
+          style={{
+            display: "flex",
+            justifyContent: "space-around",
+          }}
+        >
+          <div className="mb-2" style={{ width: "768px" }}>
             <input
               type="text"
               className="form-control"
               id="name"
               name="name"
+              placeholder="Назва"
               onChange={handleChange}
               value={values.name}
             />
           </div>
 
-          <button type="submit" className="btn btn-primary mb-3">
+          <button
+            type="submit"
+            style={{
+              width: "96px",
+              height: "38px",
+            }}
+            className="btn btn-primary mb-3"
+          >
             Пошук
           </button>
+
+          <select
+            id="count"
+            name="count"
+            onChange={handleChange}
+            style={{
+              width: "96px",
+              height: "38px",
+            }}
+            className="form-select"
+          >
+            <option defaultValue="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+          </select>
         </form>
 
         <h4>
