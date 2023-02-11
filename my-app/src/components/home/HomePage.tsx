@@ -37,6 +37,7 @@ const HomePage = () => {
       <td>{product.name}</td>
       <td>{product.detail}</td>
       <td>
+        {/* Кнопка для видалення */}
         <button
           className="btn btn-danger"
           onClick={() => {
